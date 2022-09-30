@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -n "Checking dependencies... "
-for name in youtube-dl ffmpeg
+for name in youtube-dl
 do
   [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo pacman -S $name'";deps=1; }
 done
