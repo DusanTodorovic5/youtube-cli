@@ -5,7 +5,7 @@ If you wish to download music from youtube via linux bash terminal, just run the
 
 # Dependency
 
- - youtube-dl
+ - [youtube-dl](https://youtube-dl.org/)
  
 # Example
 
