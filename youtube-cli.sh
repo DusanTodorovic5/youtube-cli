@@ -18,6 +18,7 @@ fi
 if [[ ! -f $1 ]]
 then
     echo "$1 does not exist on your filesystem."
+    exit 2;
 fi
 
 mkdir -p mp3
