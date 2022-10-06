@@ -25,7 +25,7 @@ mkdir -p mp3
 cd mp3
 
 input=
-case $input in
+case $1 in
   /*) input=$1 ;;
   *) input="../${1}" ;;
 esac
