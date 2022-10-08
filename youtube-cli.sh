@@ -15,9 +15,9 @@ done
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied. Please specify the location of links to download"
-	echo "The links should be given in file as example on github page:"
-	echo "https://github.com/DusanTodorovic5/youtube-cli/blob/main/files_to_download"
-  exit 1;
+	  echo "The links should be given in file as example on github page:"
+	  echo "https://github.com/DusanTodorovic5/youtube-cli/blob/main/files_to_download"
+    exit 1;
 fi
 # Proverimo da li je prvi argument fajl, ako nije, ispisemo poruku i izadjemo
 if [[ ! -f $1 ]]
