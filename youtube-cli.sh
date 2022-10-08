@@ -3,7 +3,7 @@
 # Ispis
 echo -n "Checking dependencies... "
 # proveravamo dependency za youtube-dl
-for name in youtube-dl
+for name in youtube-dl ffmpeg
 do
   # Proveravamo postoji li, ako ne postoji, upisemo u neki flag 'deps' 1
   [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo pacman -S $name'";deps=1; }
