@@ -6,7 +6,7 @@ echo -n "Checking dependencies... "
 for name in youtube-dl ffmpeg
 do
   # Proveravamo postoji li, ako ne postoji, upisemo u neki flag 'deps' 1
-  [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo pacman -S $name'";deps=1; }
+  [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo pacman -S $name' ";deps=1; }
 done
 # Kad proverimo sve, vidimo ako ima flag 'deps' na 1, onda trebamo da iskljucimo skriptu
 [[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
