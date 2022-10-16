@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Ispis
+# Giving user information what we will do
 echo -n "Checking dependencies... "
-# proveravamo dependency za youtube-dl
+# Checking dependency for youtube-dl and ffmpeg
 for name in youtube-dl ffmpeg
 do
-  # Proveravamo postoji li, ako ne postoji, upisemo u neki flag 'deps' 1
+  # If user does not any of these 2 programs, which will return error, and we will set flag deps to 1
   [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo pacman -S $name' ";deps=1; }
 done
-# Kad proverimo sve, vidimo ako ima flag 'deps' na 1, onda trebamo da iskljucimo skriptu
+# When we check all dependencies, if deps was set on 1, we will inform user of needed dependency and exit the script
 [[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
 
-# Proverimo broj argumenata, '$#' predstavlja broj argumenata, ako je nula, ispisemo poruku i izadjemo
+# We check if there are arguments given, $# is number of arguments
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied. Please specify the location of links to download"
@@ -19,32 +19,26 @@ if [ $# -eq 0 ]
 	  echo "https://github.com/DusanTodorovic5/youtube-cli/blob/main/files_to_download"
     exit 1;
 fi
-# Proverimo da li je prvi argument fajl, ako nije, ispisemo poruku i izadjemo
+# We check if the first argument is file, if not, we exit program
 if [[ ! -f $1 ]]
 then
     echo "$1 does not exist on your filesystem."
     exit 2
 fi
-# Napravimo folder mp3 ako ne postoji. '-p' argument znaci da ako postoji folder, ne radimo nista
+# We create directory /mp3, -p flag means that it will be created only if it doesn't exist
 mkdir -p mp3
-# Promenimo direktorijum na mp3
+# We changed current working directory to mp3
 cd mp3
-# Napravimo praznu promenjivu input. 
+# Create empty variable input, we will store path to file there
 input=
-# Proverimo da li je prvi argument apsolutna putanja do fajl, ili relativna
-# Apsolutna putanja pocinje kosom crtom, relativna bilo cime 
+# Check if file path is absolute or relative
 case $1 in
   /*) input=$1 ;;
-  *) input="../${1}" ;; # Ako je relativna putanja, dodamo '../'. Vratimo se u prosli direktorijum a ne mp3, jer je relativno u odnosu na mesto skripte
+  *) input="../${1}" ;; # If it is relative, it doesn't start with '/' which means we should add '../' to it, because user called it from directory before 'mp3'
 esac
-# Sada procitamo svaku liniju u datom fajlu
+# Now we read each line of file given as argument
 while IFS= read -r line
 do
-  # Ispisem link
 	echo "$line"
-  # Zovemo program 'youtube-dl' sa argumentima
-  # '-o' predstavlja ime fajla, stavimo title i ext, title je ime video snimka, ext je extenzija
-  # Stavimo i argument --extract-audio da izvuce samo zvuk, a ne ceo video
-  # Dodamo i argument --audio-format mp3 kako bi to sacuvao u mp3 formatu(odma konvertuje sa ffmpeg)
 	youtube-dl -o "%(title)s.%(ext)s" --extract-audio --audio-format mp3 $line
 done < "$input"
