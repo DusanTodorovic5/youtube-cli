@@ -40,5 +40,9 @@ esac
 while IFS= read -r line
 do
 	echo "$line"
+	# We call program 'youtube-dl' with arguments
+	# '-o' means the name of file, we put title and ext as title and extensions
+	# We also need '--extract-audio' to extract audio only, not whole video
+	# Also, we add argument that specify audio format, in our case 'mp3'(this will be converted by ffmpeg)
 	youtube-dl -o "%(title)s.%(ext)s" --extract-audio --audio-format mp3 $line
 done < "$input"
